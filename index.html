@@ -1,407 +1,1511 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esa Utama</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Esa Tegar Putra Utama — Portfolio</title>
 
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
 
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        #aboutTabsContent {
-          min-height: 250px; /* atau lebih tinggi sesuai kebutuhan */
+      /* TOKENS── */
+      :root {
+        --bg: #0a0a0a;
+        --bg-2: #111111;
+        --bg-3: #161616;
+        --line: rgba(255, 255, 255, 0.07);
+        --gold: #c9a96e;
+        --gold-lt: #e8c98a;
+        --white: #f0ece4;
+        --muted: rgba(240, 236, 228, 0.45);
+        --font-display: "Cormorant Garamond", Georgia, serif;
+        --font-body: "DM Sans", sans-serif;
+        --radius: 4px;
+        --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* RESET / BASE── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--white);
+        font-family: var(--font-body);
+        font-size: 15px;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        line-height: 1.15;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      ::selection {
+        background: var(--gold);
+        color: var(--bg);
+      }
+
+      /* NOISE OVERLAY─ */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        opacity: 0.022;
+      }
+
+      /* NAVBAR── */
+      #navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1.25rem 0;
+        transition:
+          background var(--transition),
+          padding var(--transition),
+          box-shadow var(--transition);
+      }
+      #navbar.scrolled {
+        background: rgba(10, 10, 10, 0.92);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        padding: 0.75rem 0;
+        box-shadow: 0 1px 0 var(--line);
+      }
+      .nav-brand {
+        font-family: var(--font-display);
+        font-size: 1.45rem;
+        letter-spacing: 0.04em;
+        color: var(--white);
+      }
+      .nav-brand span {
+        color: var(--gold);
+      }
+      .navbar-nav .nav-link {
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted) !important;
+        padding: 0.4rem 0.85rem !important;
+        transition: color var(--transition);
+        position: relative;
+      }
+      .navbar-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0.85rem;
+        right: 0.85rem;
+        height: 1px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--transition);
+      }
+      .navbar-nav .nav-link:hover,
+      .navbar-nav .nav-link.active {
+        color: var(--white) !important;
+      }
+      .navbar-nav .nav-link:hover::after,
+      .navbar-nav .nav-link.active::after {
+        transform: scaleX(1);
+      }
+      .navbar-toggler {
+        border: 1px solid var(--line);
+        color: var(--white);
+      }
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(240,236,228,0.8)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      /* HERO */
+      #hero {
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        padding: 120px 0 80px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-decor {
+        position: absolute;
+        right: -6%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: min(55vw, 620px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 40% 40%,
+          rgba(201, 169, 110, 0.09) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+      }
+      .hero-tag::before {
+        content: "";
+        display: block;
+        width: 28px;
+        height: 1px;
+        background: var(--gold);
+      }
+      .hero-name {
+        font-size: clamp(2.8rem, 7vw, 6.5rem);
+        font-weight: 300;
+        color: var(--white);
+        line-height: 1.05;
+        margin-bottom: 1rem;
+      }
+      .hero-name em {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .hero-typed-wrap {
+        font-size: clamp(1rem, 2.5vw, 1.35rem);
+        color: var(--muted);
+        font-family: var(--font-display);
+        font-style: italic;
+        margin-bottom: 1.75rem;
+        min-height: 2.5rem;
+      }
+      #typed {
+        color: var(--gold-lt);
+      }
+      /* Mengatasi kedipan animasi typed.js */
+      .typed-cursor {
+        color: var(--gold);
+        font-size: 1.2rem;
+      }
+      .hero-bio {
+        color: var(--muted);
+        max-width: 480px;
+        font-size: 0.9rem;
+        margin-bottom: 2.5rem;
+        line-height: 1.85;
+      }
+      .btn-gold {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--gold);
+        color: var(--bg);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.75rem 1.75rem;
+        border: none;
+        cursor: pointer;
+        transition:
+          background var(--transition),
+          transform var(--transition);
+      }
+      .btn-gold:hover {
+        background: var(--gold-lt);
+        transform: translateY(-2px);
+      }
+      .btn-outline-gold {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: transparent;
+        color: var(--white);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.75rem 1.75rem;
+        border: 1px solid var(--line);
+        cursor: pointer;
+        transition:
+          border-color var(--transition),
+          color var(--transition),
+          transform var(--transition);
+      }
+      .btn-outline-gold:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-2px);
+      }
+      .hero-socials {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--line);
+      }
+      .hero-socials span {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .hero-socials a {
+        font-size: 0.72rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        transition: color var(--transition);
+      }
+      .hero-socials a:hover {
+        color: var(--gold);
+      }
+
+      /* SECTION HEADER */
+      .section-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        max-width: 40px;
+        height: 1px;
+        background: var(--gold);
+      }
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-weight: 300;
+        color: var(--white);
+        margin-bottom: 1rem;
+      }
+
+      /* ABOUT */
+      #about {
+        padding: 110px 0;
+        background: var(--bg-2);
+      }
+      .about-img-wrap {
+        position: relative;
+      }
+      .about-img-wrap img {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        filter: grayscale(20%);
+        transition: filter var(--transition);
+      }
+      .about-img-wrap:hover img {
+        filter: grayscale(0);
+      }
+      .about-img-wrap::before {
+        content: "";
+        position: absolute;
+        inset: -12px 12px 12px -12px;
+        border: 1px solid var(--gold);
+        opacity: 0.35;
+        z-index: 0;
+        transition: opacity var(--transition);
+      }
+      .about-img-wrap:hover::before {
+        opacity: 0.7;
+      }
+      .about-img-wrap img {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* About Tabs */
+      .about-tabs {
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 0;
+      }
+      .about-tab-btn {
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 0.75rem 1.25rem 0.75rem 0;
+        margin-bottom: -1px;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        cursor: pointer;
+        transition:
+          color var(--transition),
+          border-color var(--transition);
+      }
+      .about-tab-btn.active {
+        color: var(--gold);
+        border-bottom-color: var(--gold);
+      }
+      .about-tab-btn:hover {
+        color: var(--white);
+      }
+      .about-tab-pane {
+        display: none;
+      }
+      .about-tab-pane.active {
+        display: block;
+        animation: fadeUp 0.4s ease forwards;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
         }
-      </style>
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow p-3 mb-5">
-            <div class="container">
-                <a class="navbar-brand fw-bold" href="#">Esa_Utama</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                      <li class="nav-item">
-                          <a class="nav-link" id="nav-home" href="#home">Home</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="nav-about" href="#about">About</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="nav-portfolio" href="#portfolio">Portfolio</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="nav-contact" href="#contact">Contact</a>
-                      </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    <main>
-        <section id="home" class="py-3" data-aos="fade-up">
-            <div class="container mt-2">
-                <div class="row d-flex justify-content-center align-items-center">
-                    <div class="col-lg-8">
-                        <button class="btn btn-outline-dark btn-sm fw-bold mb-2">Hi There!</button>
-                        <h1 class="">I am Esa Tegar Putra Utama</h1>
-                        <h2><span id="typed"></span></h2>
-                        <p class="mb-3">
-                          A tech enthusiast who loves building websites, exploring new ideas, and turning imagination into reality. Always excited to learn and grow every day.
-                        </p>
-                        <div class="d-flex gap-2 mb-3">
-                            <a href="https://www.linkedin.com/in/esa-tegar-putra-utama-78b861300/" class="btn btn-primary btn-sm">Hire me..</a>
-                            <a href="portfolio.html" class="btn btn-outline-primary btn-sm">View Portfolio..</a>
-                        </div>
-                        <div class="d-flex gap-3 mb-3">
-                            <a href="" class="text-dark text-decoration-none fw-bold">● Instagram</a>
-                            <a href="" class="text-dark text-decoration-none fw-bold">● Tiktok</a>
-                            <a href="" class="text-dark text-decoration-none fw-bold">● LinkedIn</a>
-                        </div>
-                    </div>
-                </div>
+      .about-text {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.9;
+      }
+      .skills-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .skill-row label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.4rem;
+        color: var(--white);
+      }
+      .skill-bar {
+        height: 2px;
+        background: var(--line);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .skill-bar-fill {
+        height: 100%;
+        width: 0%; /* Diubah ke 0% agar diatur via JS sewaktu tab aktif */
+        background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .exp-item {
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 1.5rem;
+      }
+      .exp-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      .exp-role {
+        font-size: 1rem;
+        font-family: var(--font-display);
+        color: var(--white);
+        margin-bottom: 0.2rem;
+      }
+      .exp-org {
+        font-size: 0.78rem;
+        color: var(--gold);
+        letter-spacing: 0.06em;
+        margin-bottom: 0.6rem;
+      }
+      .exp-desc {
+        font-size: 0.85rem;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .exp-desc li {
+        margin-bottom: 0.25rem;
+      }
+
+      /* DIVIDER── */
+      .divider-line {
+        width: 100%;
+        height: 1px;
+        background: var(--line);
+        margin: 0;
+      }
+
+      /* PORTFOLIO── */
+      #portfolio {
+        padding: 110px 0;
+        background: var(--bg);
+      }
+      .port-filter {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+      }
+      .filter-btn {
+        background: none;
+        border: 1px solid var(--line);
+        padding: 0.45rem 1.1rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all var(--transition);
+        border-radius: 2px;
+      }
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: var(--gold);
+        color: var(--bg);
+        border-color: var(--gold);
+      }
+
+      .port-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem; /* Memberikan sedikit jarak bernapas antar kartu */
+      }
+      @media (max-width: 768px) {
+        .port-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+      @media (min-width: 576px) and (max-width: 768px) {
+        .port-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .port-card {
+        position: relative;
+        overflow: hidden;
+        background: var(--bg-3);
+        border: 1px solid var(--line);
+        transition:
+          transform var(--transition),
+          box-shadow var(--transition),
+          opacity 0.4s ease;
+        cursor: pointer;
+      }
+      /* Menyembunyikan item yang difilter dengan anggun */
+      .port-card.hide {
+        display: none !important;
+      }
+      .port-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+      }
+      .port-card-inner {
+        padding: 2rem;
+      }
+      .port-card-num {
+        font-family: var(--font-display);
+        font-size: 3rem;
+        font-weight: 300;
+        color: rgba(201, 169, 110, 0.12);
+        line-height: 1;
+        margin-bottom: 0.75rem;
+      }
+      .port-card-tag {
+        font-size: 0.65rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.5rem;
+      }
+      .port-card-title {
+        font-size: 1.2rem;
+        color: var(--white);
+        margin-bottom: 0.75rem;
+      }
+      .port-card-desc {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+      }
+      .port-card-link {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: gap var(--transition);
+      }
+      .port-card:hover .port-card-link {
+        gap: 0.8rem;
+      }
+      .port-card-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+      }
+      .port-card:hover .port-card-bar {
+        transform: scaleX(1);
+      }
+
+      /* STATS */
+      #stats {
+        padding: 70px 0;
+        background: var(--bg-3);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .stat-item {
+        text-align: center;
+        padding: 1rem;
+      }
+      .stat-num {
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 300;
+        color: var(--gold);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .stat-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .stat-divider {
+        width: 1px;
+        background: var(--line);
+      }
+      @media (max-width: 576px) {
+        .stat-divider {
+          display: none;
+        }
+      }
+
+      /* CONTACT / FOOTER─ */
+      #contact {
+        padding: 110px 0 0;
+        background: var(--bg-2);
+      }
+      .contact-headline {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 300;
+        color: var(--white);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+      }
+      .contact-headline em {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .contact-sub {
+        color: var(--muted);
+        max-width: 420px;
+        font-size: 0.9rem;
+        line-height: 1.85;
+        margin-bottom: 2.5rem;
+      }
+      .contact-info {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-bottom: 2.5rem;
+      }
+      .contact-info li {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .contact-info li i {
+        color: var(--gold);
+        width: 16px;
+        text-align: center;
+      }
+      .contact-info a:hover {
+        color: var(--gold);
+      }
+
+      .social-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .social-btn {
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        color: var(--muted);
+        transition: all var(--transition);
+      }
+      .social-btn:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-3px);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid var(--line);
+        padding: 1.5rem 0;
+        margin-top: 5rem;
+      }
+      .footer-bottom p {
+        font-size: 0.75rem;
+        color: var(--muted);
+        letter-spacing: 0.06em;
+      }
+      .footer-nav {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .footer-nav a {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        transition: color var(--transition);
+      }
+      .footer-nav a:hover {
+        color: var(--gold);
+      }
+
+      /* BACK TO TOP */
+      #back-to-top {
+        position: fixed;
+        bottom: 1.75rem;
+        right: 1.75rem;
+        z-index: 999;
+        width: 44px;
+        height: 44px;
+        background: var(--gold);
+        color: var(--bg);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+          opacity var(--transition),
+          transform var(--transition),
+          background var(--transition);
+      }
+      #back-to-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      #back-to-top:hover {
+        background: var(--gold-lt);
+      }
+
+      /* CURSOR DOT─ */
+      @media (pointer: fine) {
+        #cursor-dot {
+          position: fixed;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--gold);
+          pointer-events: none;
+          z-index: 9999;
+          transform: translate(-50%, -50%);
+          transition:
+            transform 0.08s ease,
+            opacity 0.3s;
+          mix-blend-mode: difference;
+        }
+        #cursor-ring {
+          position: fixed;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: 1px solid rgba(201, 169, 110, 0.4);
+          pointer-events: none;
+          z-index: 9998;
+          transform: translate(-50%, -50%);
+          transition:
+            transform 0.18s ease,
+            width 0.3s,
+            height 0.3s,
+            opacity 0.3s;
+        }
+      }
+
+      /* SCROLL REVEAL HELPERS── */
+      [data-aos] {
+        will-change: opacity, transform;
+      }
+
+      /* RESPONSIVE TWEAKS */
+      @media (max-width: 991px) {
+        .hero-decor {
+          display: none;
+        }
+        .about-img-wrap {
+          max-width: 380px;
+          margin: 0 auto 3rem;
+        }
+      }
+      @media (max-width: 575px) {
+        .hero-name {
+          font-size: 2.6rem;
+        }
+        .btn-gold,
+        .btn-outline-gold {
+          font-size: 0.68rem;
+          padding: 0.65rem 1.35rem;
+        }
+        .port-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <nav id="navbar" class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="nav-brand navbar-brand" href="#hero">Esa<span>.</span></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+          <ul class="navbar-nav gap-1">
+            <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="hero">
+      <div class="hero-decor"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-xl-7">
+            <div class="hero-tag" data-aos="fade-up" data-aos-delay="0">
+              Available for work
             </div>
-        </section>
-        
-        <section id="about" class="py-5 bg-light" data-aos="fade-up">
-          <div class="container my-3">
-            <div class="row justify-content-center">
-              <div class="col-md-5 text-center my-2">
-                <img src="foto_esa.jpg" class="img-fluid rounded-3 shadow" alt="Profile Photo" style="max-width:100%; height:auto;">
+            <h1 class="hero-name" data-aos="fade-up" data-aos-delay="80">
+              Esa Tegar<br /><em>Putra Utama</em>
+            </h1>
+            <div
+              class="hero-typed-wrap"
+              data-aos="fade-up"
+              data-aos-delay="160"
+            >
+              — <span id="typed"></span>
+            </div>
+            <p class="hero-bio" data-aos="fade-up" data-aos-delay="220">
+              A tech enthusiast who loves building websites, exploring new
+              ideas, and turning imagination into reality. Always excited to
+              learn and grow every day.
+            </p>
+            <div
+              class="d-flex flex-wrap gap-3"
+              data-aos="fade-up"
+              data-aos-delay="280"
+            >
+              <a
+                href="https://www.linkedin.com/in/esa-tegar-putra-utama-78b861300/"
+                class="btn-gold"
+                target="_blank"
+              >
+                Hire Me <i class="fa-solid fa-arrow-right fa-xs"></i>
+              </a>
+              <a href="#portfolio" class="btn-outline-gold">
+                View Work <i class="fa-solid fa-arrow-right fa-xs"></i>
+              </a>
+            </div>
+            <div class="hero-socials" data-aos="fade-up" data-aos-delay="340">
+              <span>Follow</span>
+              <a href="https://www.instagram.com/etpu_1703" target="_blank"
+                >Instagram</a
+              >
+              <a href="https://github.com/EsaTegarPutra" target="_blank"
+                >GitHub</a
+              >
+              <a
+                href="https://www.linkedin.com/in/esa-tegar-putra-utama-78b861300/"
+                target="_blank"
+                >LinkedIn</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stats">
+      <div class="container">
+        <div class="row g-0 justify-content-center align-items-center">
+          <div class="col-6 col-md-3">
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+              <div class="stat-num" data-count="10">0</div>
+              <div class="stat-label">Projects Built</div>
+            </div>
+          </div>
+          <div
+            class="col-md-auto d-none d-md-block stat-divider"
+            style="height: 60px"
+          ></div>
+          <div class="col-6 col-md-3">
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="80">
+              <div class="stat-num" data-count="6">0</div>
+              <div class="stat-label">Months Internship</div>
+            </div>
+          </div>
+          <div
+            class="col-md-auto d-none d-md-block stat-divider"
+            style="height: 60px"
+          ></div>
+          <div class="col-6 col-md-3">
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="160">
+              <div class="stat-num" data-count="4">0</div>
+              <div class="stat-label">Technologies</div>
+            </div>
+          </div>
+          <div
+            class="col-md-auto d-none d-md-block stat-divider"
+            style="height: 60px"
+          ></div>
+          <div class="col-6 col-md-3">
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="240">
+              <div class="stat-num" data-count="1">0</div>
+              <div class="stat-label">Years of Experience</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="row gy-5 align-items-start">
+          <div class="col-lg-4" data-aos="fade-right">
+            <div class="about-img-wrap">
+              <img src="esaganteng.jpg" alt="Esa Tegar Putra Utama" />
+            </div>
+          </div>
+
+          <div class="col-lg-7 offset-lg-1" data-aos="fade-up">
+            <div class="section-label">Who I Am</div>
+            <h2 class="section-title">
+              Crafting digital<br /><em style="color: var(--gold)"
+                >experiences</em
+              >
+            </h2>
+
+            <div class="about-tabs">
+              <button class="about-tab-btn active" data-tab="tab-about">
+                About Me
+              </button>
+              <button class="about-tab-btn" data-tab="tab-skills">
+                Skills
+              </button>
+              <button class="about-tab-btn" data-tab="tab-exp">
+                Experience
+              </button>
+            </div>
+
+            <div id="tab-about" class="about-tab-pane active">
+              <p class="about-text">
+                A graduate of SMK Negeri 10 Jakarta majoring in Software Engineering with over 1 year of professional experience in the Information Technology field. During my studies and career, I developed strong skills in programming, software development, and problem-solving. I also gained valuable experience through internships and professional projects, enhancing both my technical expertise and ability to work effectively in a team.
+              </p>
+              <p class="about-text mt-3">
+                I've developed and maintained various web applications, including e-commerce platforms, financial technology systems, digital wallets, simulation applications, Vendor Management Systems, and web-based games. In addition, I have experience in graphic design, creating visual assets such as posters, logos, and brochures.
+              </p>
+            </div>
+
+            <div id="tab-skills" class="about-tab-pane">
+              <div class="skills-grid">
+                <div class="skill-row">
+                  <label><span>Laravel / PHP</span><span>85%</span></label>
+                  <div class="skill-bar">
+                    <div class="skill-bar-fill" data-width="85%"></div>
+                  </div>
+                </div>
+                <div class="skill-row">
+                  <label
+                    ><span>HTML / CSS / Bootstrap</span><span>90%</span></label
+                  >
+                  <div class="skill-bar">
+                    <div class="skill-bar-fill" data-width="90%"></div>
+                  </div>
+                </div>
+                <div class="skill-row">
+                  <label><span>JavaScript</span><span>72%</span></label>
+                  <div class="skill-bar">
+                    <div class="skill-bar-fill" data-width="72%"></div>
+                  </div>
+                </div>
+                <div class="skill-row">
+                  <label><span>Flutter / Dart</span><span>65%</span></label>
+                  <div class="skill-bar">
+                    <div class="skill-bar-fill" data-width="65%"></div>
+                  </div>
+                </div>
+                <div class="skill-row">
+                  <label
+                    ><span>Figma / Canva / Illustrator</span
+                    ><span>80%</span></label
+                  >
+                  <div class="skill-bar">
+                    <div class="skill-bar-fill" data-width="80%"></div>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-5 my-2">
-                <!-- Navigation Tabs -->
-                <ul class="nav nav-tabs mb-3" id="aboutTabs" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active fw-bold" id="about-tab" data-bs-toggle="tab" data-bs-target="#about-content" type="button" role="tab">ABOUT ME</button>
+            </div>
+
+            <div id="tab-exp" class="about-tab-pane">
+              <div class="exp-item">
+                <div class="exp-role">Web Developer Intern</div>
+                <div class="exp-org">
+                  PT. Nagatama &nbsp;·&nbsp; Sep 2024 – Mar 2025 &nbsp;·&nbsp; 6
+                  months
+                </div>
+                <ul class="exp-desc">
+                  <li>
+                    Developed and managed a Laravel-based back-office rental
+                    website with product, user, transaction, and report
+                    management features.
                   </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-bold" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills-content" type="button" role="tab">SKILLS</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-bold" id="experience-tab" data-bs-toggle="tab" data-bs-target="#experience-content" type="button" role="tab">EXPERIENCE</button>
+                  <li>
+                    Conducted analysis and implemented ERDs to support the
+                    database structure.
                   </li>
                 </ul>
-        
-                <!-- Tab Content -->
-                <div class="tab-content" id="aboutTabsContent">
-                  <div class="tab-pane fade show active" id="about-content" role="tabpanel">
-                    <h2 class="mb-3">About Me</h2>
-                    <p>A graduate of SMK Negeri 10 Jakarta majoring in Software Engineering. During my studies, I actively developed skills in information technology, particularly in programming and software development. I also gained experience through school projects and internships, enhancing my practical knowledge and teamwork abilities.</p>
-                    <h5 class="mb-3 fw-bold">Passionate Developer since 18 y.o</h5>
-                    <p>I've built various websites including e-commerce platforms, financial technology systems, digital wallets, simulation apps, web-based games, and also worked on graphic design projects such as posters, logos, and brochures.
-                  </p>
-                  </div>
-        
-                  <div class="tab-pane fade" id="skills-content" role="tabpanel">
-                    <h2 class="mb-3">My Skills</h2>
-                    <ul>
-                      <li><span class="fw-bold">Languages:</span>  Indonesian (Native), English (Intermediate)</li>
-                      <li><span class="fw-bold">Web Development:</span> Laravel, Bootstrap, Tailwind CSS</li>
-                      <li><span class="fw-bold">Mobile Development:</span> Flutter</li>
-                      <li><span class="fw-bold">Design Tools:</span> Canva, Figma, Adobe Illustrator</li>
-                    </ul>
-                    <h2 class="mb-3">My Certificate</h2>
-                    <h5 class="fw-bold">Internship Certificate – PT. NMGA</h5>
-                    <p class="">Developer, PT Nagatama | September 01, 2024 - March 04, 2025</p>
-                  </div>
-        
-                  <div class="tab-pane fade" id="experience-content" role="tabpanel">
-                    <h2 class="mb-3">My Experience</h2>
-                    <h5 class="fw-bold">Internship, PT. Nagatama</h5>
-                    <p class=""><span class="fw-bold">Duration :</span> 6 month</p>
-                    <ul>
-                      <li>Developed and managed a Laravel-based back office rental website, including features for product, user, transaction, and report management.</li>
-                      <li>Conducted analysis and implemented Entity Relationship Diagrams (ERD) to support the database structure of the rental system.</li>
-                    </ul>
-                    <h5 class="fw-bold">Treasurer, Islamic Spiritual Organization – SMKN 10 Jakarta</h5>
-                    <ul>
-                      <li>Managed the cash finances of the Islamic Spiritual Organization (Rohis).</li>
-                      <li>Calculated and recorded student charity funds at SMKN 10 Jakarta.</li>
-                    </ul>
-                    <h5 class="fw-bold">Trainer, Information Technology Club – SMKN 10 Jakarta</h5>
-                    <ul>
-                      <li>Teaching the basics of graphic design using Canva and Figma.</li>
-                      <li>Teaching the basics of website programming with HTML and CSS.</li>
-                    </ul>
-                  </div>
+              </div>
+              <div class="exp-item">
+                <div class="exp-role">Web Developer & IT Consultant</div>
+                <div class="exp-org">
+                  Access Digital Frontier &nbsp;·&nbsp; June 2025 – June 2026 &nbsp;·&nbsp; 1
+                  year
                 </div>
+                <ul class="exp-desc">
+                  <li>
+                    Developed and integrated the Vendor Management System (VMS) with WISE using the Laravel framework to support vendor registration, verification, and management processes at PT Wijaya Karya.
+                  </li>
+                  <li>
+                    Developed new features, performed application maintenance and bug fixing, and optimized application performance to improve business process efficiency and effectiveness.
+                  </li>
+                </ul>
+              </div>
+              <div class="exp-item">
+                <div class="exp-role">Treasurer – Islamic Spiritual Organization</div>
+                <div class="exp-org">
+                  SMKN 10 Jakarta
+                </div>
+                <ul class="exp-desc">
+                  <li>
+                    Managed cash finances and recorded student charity funds for
+                    the organization.
+                  </li>
+                </ul>
+              </div>
+              <div class="exp-item">
+                <div class="exp-role">Trainer — IT Club</div>
+                <div class="exp-org">SMKN 10 Jakarta</div>
+                <ul class="exp-desc">
+                  <li>
+                    Taught basics of graphic design using Canva and Figma.
+                  </li>
+                  <li>Taught HTML and CSS fundamentals for web programming.</li>
+                </ul>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
 
-        <section id="portfolio" class="py-5" data-aos="fade-up">
-          <div class="container my-3">
-            <div class="row justify-content-center">
-              <div class="col-md-10">
-                <h2 class="text-center mb-4 fw-bold">My Portfolio</h2>
-        
-                <!-- Tabs Menu -->
-                <ul class="nav nav-tabs justify-content-center mb-4" id="portfolioTab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="design-tab" data-bs-toggle="tab" data-bs-target="#design" type="button" role="tab"><i class="fa-solid fa-object-group"></i> Design Graphic</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="website-tab" data-bs-toggle="tab" data-bs-target="#website" type="button" role="tab"><i class="fa-solid fa-desktop"></i> Website</button>
-                  </li>
-                </ul>
-            
-                <!-- Tabs Content -->
-                <div class="tab-content mb-3" id="portfolioTabContent">
-                  <!-- Design Graphic Tab -->
-                  <div class="tab-pane fade show active" id="design" role="tabpanel">
-                    <div class="text-center">
-                      <h4 class="mb-3">My Graphic Design Works</h4>
-                      <div class="row justify-content-center">
-                        <div class="col-md-4">
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <iframe src="Labeling dan Packaging.pdf" width="100%" height="150px" style="border:none;"></iframe>
-                              <a href="Labeling dan Packaging.pdf" download class="btn btn-primary mt-3"><i class="fa-solid fa-download"></i> Download PDF</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <iframe src="HAKI by Esa Tegar Putra Utama.pdf" width="100%" height="150px" style="border:none;"></iframe>
-                              <a href="HAKI by Esa Tegar Putra Utama.pdf" download class="btn btn-primary mt-3"><i class="fa-solid fa-download"></i> Download PDF</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <iframe src="Ciptakan Pertanian Modern dan Inovasi by esa.jpg" width="100%" height="150px" style="border:none;"></iframe>
-                              <a href="Ciptakan Pertanian Modern dan Inovasi by esa.jpg" download class="btn btn-primary mt-3"><i class="fa-solid fa-download"></i> Download PDF</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            
-                  <!-- Website Tab -->
-                  <div class="tab-pane fade" id="website" role="tabpanel">
-                    <div class="text-center">
-                      <h4 class="mb-3">Website Project Presentations</h4>
-                      <div class="row justify-content-center">
-                        <div class="col-md-4">
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <h5 class="card-title fw-bold">Valentine's Day Website</h5>
-                              <h6 class="card-subtitle mb-2 text-body-secondary">A Special Message for You</h6>
-                              <p>A heartfelt Valentine's greeting for someone truly special.</p>
-                              <a href="https://github.com/EsaTegarPutra/valentine" class="btn btn-primary btn-sm">View Code..</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <h5 class="card-title fw-bold">SekolahKu News</h5>
-                              <h6 class="card-subtitle mb-2 text-body-secondary">Latest Updates and Stories</h6>
-                              <p>Stay informed with the latest happenings and events.</p>
-                              <a href="https://github.com/EsaTegarPutra/sekolahku" class="btn btn-primary btn-sm">View Code..</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <h5 class="card-title fw-bold">DriveGuard Simulation</h5>
-                              <h6 class="card-subtitle mb-2 text-body-secondary">Experience Safe Driving</h6>
-                              <p>Learn and practice safe driving techniques through simulation.</p>
-                              <a href="https://github.com/EsaTegarPutra/simulasi-driveguard" class="btn btn-primary btn-sm">View Code..</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Show More -->
-                <div class="text-center mb-3">
-                  <a href="portfolio.html" class="btn btn-outline-primary btn-lg rounded-pill px-5 shadow-sm">
-                    Show More Projects..
-                  </a>
-                </div>
-              </div>
-            </div>
+<!-- ── PORTFOLIO ── -->
+    <section id="portfolio">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-lg-8" data-aos="fade-up">
+            <div class="section-label">My Work</div>
+            <h2 class="section-title">
+              Selected<br /><em style="color: var(--gold)">projects</em>
+            </h2>
           </div>
-        </section>
-            
-        <section id="contact" class="bg-dark" data-aos="fade-up">
-            <!-- Remove the container if you want to extend the Footer to full width. -->
-            <footer
-                class="text-center text-lg-start text-white bg-dark"
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="port-filter" data-aos="fade-up" data-aos-delay="80">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="web">Website</button>
+          <button class="filter-btn" data-filter="design">Design</button>
+        </div>
+
+        <!-- Portfolio Items Grid -->
+        <div class="port-grid" data-aos="fade-up" data-aos-delay="160">
+          
+          <!-- 01: Valentine's Day Website (WEB) -->
+          <div class="port-card" data-category="web">
+            <div class="port-card-inner">
+              <div class="port-card-num">01</div>
+              <div class="port-card-tag">Website</div>
+              <h3 class="port-card-title">Valentine's Day<br />Website</h3>
+              <p class="port-card-desc">
+                A heartfelt Valentine's greeting with interactive animations for someone truly special.
+              </p>
+              <a href="https://github.com/EsaTegarPutra/valentine" class="port-card-link" target="_blank">
+                View Code <i class="fa-solid fa-arrow-right fa-xs"></i>
+              </a>
+            </div>
+            <div class="port-card-bar"></div>
+          </div>
+
+          <!-- 02: SekolahKu News Portal (WEB) -->
+          <div class="port-card" data-category="web">
+            <div class="port-card-inner">
+              <div class="port-card-num">02</div>
+              <div class="port-card-tag">Website</div>
+              <h3 class="port-card-title">SekolahKu<br />News Portal</h3>
+              <p class="port-card-desc">
+                Stay informed with the latest happenings and events from the school community.
+              </p>
+              <a href="https://github.com/EsaTegarPutra/sekolahku" class="port-card-link" target="_blank">
+                View Code <i class="fa-solid fa-arrow-right fa-xs"></i>
+              </a>
+            </div>
+            <div class="port-card-bar"></div>
+          </div>
+
+          <!-- 03: DriveGuard Simulation (WEB) -->
+          <div class="port-card" data-category="web">
+            <div class="port-card-inner">
+              <div class="port-card-num">03</div>
+              <div class="port-card-tag">Website · Simulation</div>
+              <h3 class="port-card-title">DriveGuard<br />Simulation</h3>
+              <p class="port-card-desc">
+                Learn and practice safe driving techniques through an interactive web-based simulation.
+              </p>
+              <a href="https://github.com/EsaTegarPutra/simulasi-driveguard" class="port-card-link" target="_blank">
+                View Code <i class="fa-solid fa-arrow-right fa-xs"></i>
+              </a>
+            </div>
+            <div class="port-card-bar"></div>
+          </div>
+
+          <!-- 04: Labeling & Packaging (DESIGN) -->
+          <div class="port-card" data-category="design">
+            <div class="port-card-inner">
+              <div class="port-card-num">04</div>
+              <div class="port-card-tag">Graphic Design</div>
+              <h3 class="port-card-title">Labeling &amp;<br />Packaging</h3>
+              <p class="port-card-desc">
+                Professional product labeling and packaging design for a branding project.
+              </p>
+              <a href="Labeling dan Packaging.pdf" class="port-card-link" target="_blank">
+                View PDF <i class="fa-solid fa-download fa-xs"></i>
+              </a>
+            </div>
+            <div class="port-card-bar"></div>
+          </div>
+
+          <!-- 05: HAKI Design Portfolio (DESIGN) -->
+          <div class="port-card" data-category="design">
+            <div class="port-card-inner">
+              <div class="port-card-num">05</div>
+              <div class="port-card-tag">Graphic Design · HAKI</div>
+              <h3 class="port-card-title">HAKI Design<br />Portfolio</h3>
+              <p class="port-card-desc">
+                Intellectual property (HAKI) design portfolio showcasing original creative works.
+              </p>
+              <a href="HAKI by Esa Tegar Putra Utama.pdf" class="port-card-link" target="_blank">
+                View PDF <i class="fa-solid fa-download fa-xs"></i>
+              </a>
+            </div>
+            <div class="port-card-bar"></div>
+          </div>
+
+          <!-- 06: Modern Farming Innovation Poster (DESIGN) -->
+          <div class="port-card" data-category="design">
+            <div class="port-card-inner">
+              <div class="port-card-num">06</div>
+              <div class="port-card-tag">Graphic Design · Poster</div>
+              <h3 class="port-card-title">Modern Farming<br />Innovation Poster</h3>
+              <p class="port-card-desc">
+                A creative poster promoting modern agriculture and innovation concepts.
+              </p>
+              <a href="Ciptakan Pertanian Modern dan Inovasi by esa.jpg" class="port-card-link" target="_blank">
+                View Image <i class="fa-solid fa-download fa-xs"></i>
+              </a>
+            </div>
+            <div class="port-card-bar"></div>
+          </div>
+
+        </div>
+
+        <!-- Call To Action (CTA) -->
+        <div class="text-center mt-5" data-aos="fade-up">
+          <a href="https://github.com/EsaTegarPutra" class="btn-outline-gold" target="_blank">
+            See All on GitHub <i class="fa-brands fa-github fa-sm"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          < class="col-lg-7" data-aos="fade-up">
+            <div class="section-label">Get In Touch</div>
+            <h2 class="contact-headline">
+              Let's create something <em>extraordinary</em> together.
+            </h2>
+            <p class="contact-sub">
+              Siap berkolaborasi dalam proyek web development skala kecil maupun
+              menengah, perancangan UI/UX, atau sistem kustom backend.
+            </p>
+
+            <ul class="contact-info">
+              <li>
+                <i class="fa-solid fa-envelope"></i>
+                <a href="mailto:esategarputrautama@gmail.com"
+                  >esategarputrautama@gmail.com</a
                 >
-            <!-- Grid container -->
-            <div class="container p-4 pb-0">
-            <!-- Section: Links -->
-            <section class="">
-              <!--Grid row-->
-              <div class="row justify-content-center">
-                <!-- Grid column -->
-                <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mt-3">
-                  <h6 class="text-uppercase mb-4 font-weight-bold">
-                    Esa_Utama
-                  </h6>
-                  <p class="fst-italic">
-                    "Dreams do not come true without hard work, perseverance, and belief. Every small step taken today lays the foundation for achieving great victories in the future."
-                  </p>
-                  <p class="fw-bold">
-                    — Esa Tegar Putra Utama | 2025
-                  </p>              
-                </div>
-                
-
-                <hr class="w-100 clearfix d-md-none" />
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                  <h6 class="text-uppercase mb-4 font-weight-bold">
-                    Menu
-                  </h6>
-                  <p>
-                    <a href="#home" class="text-white">Home</a>
-                  </p>
-                  <p>
-                    <a href="#about" class="text-white">About me</a>
-                  </p>
-                  <p>
-                    <a href="portfolio.html" class="text-white">My Portfolio</a>
-                  </p>
-                  <p>
-                    <a href="help.html" class="text-white">Help</a>
-                  </p>
-                </div>
-
-                <!-- Grid column -->
-                <hr class="w-100 clearfix d-md-none" />
-
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                  <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-                  <p><i class="fas fa-home mr-3"></i> Senopati Dalam II Street, No. 1A, South Jakarta, Indonesia
-                  <p><i class="fas fa-envelope mr-3"></i> tegaresautama17@gmail.com</p>
-                  <p><i class="fas fa-phone mr-3"></i> + 62 877 2795 9318</p>
-                  <p><i class="fas fa-phone mr-3"></i> + 62 813 1744 3518</p>
-                </div>
-                <!-- Grid column -->
-              </div>
-              <!--Grid row-->
-            </section>
-            <!-- Section: Links -->
-
-            <hr class="my-3">
-
-            <!-- Section: Copyright -->
-            <section class="p-3 pt-0">
-              <div class="row d-flex align-items-center">
-                <!-- Grid column -->
-                <div class="col-md-7 col-lg-8 text-center text-md-start">
-                  <!-- Copyright -->
-                  <div class="p-3">
-                    © 2025 Copyright:
-                    <a class="text-white text-decoration-none" href=""
-                      >Esa Tegar Putra Utama</a
-                      >
-                  </div>
-                  <!-- Copyright -->
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
-                  <!-- Facebook -->
-                  <a
-                    class="btn btn-outline-light btn-floating m-1"
-                    class="text-white"
-                    role="button" href="https://www.linkedin.com/in/esa-tegar-putra-utama-78b861300/"
-                    ><i class="fab fa-linkedin"></i
-                    ></a>
-
-                  <!-- Twitter -->
-                  <a
-                    class="btn btn-outline-light btn-floating m-1"
-                    class="text-white"
-                    role="button" href="https://github.com/EsaTegarPutra"
-                    ><i class="fab fa-github"></i
-                    ></a>
-
-                  <!-- Google -->
-                  <a
-                    class="btn btn-outline-light btn-floating m-1"
-                    class="text-white"
-                    role="button" href="mailto:tegaresautama17@gmail.com?subject=Ini%20adalah%20judul%20email%20default"
-                    ><i class="fab fa-google"></i
-                    ></a>
-
-                  <!-- Instagram -->
-                  <a
-                    class="btn btn-outline-light btn-floating m-1"
-                    class="text-white"
-                    role="button" href="https://www.instagram.com/etpu_1703"
-                    ><i class="fab fa-instagram"></i
-                    ></a>
-                </div>
-                <!-- Grid column -->
-              </div>
-            </section>
-            <!-- Section: Copyright -->
+              </li>
+              <li>
+                <i class="fa-solid fa-location-dot"></i> Jakarta, Indonesia
+              </li>
+            </ul>
+            <div class="social-row">
+              <a
+                href="https://www.linkedin.com/in/esa-tegar-putra-utama-78b861300/"
+                class="social-btn"
+                target="_blank"
+                title="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="https://github.com/EsaTegarPutra"
+                class="social-btn"
+                target="_blank"
+                title="GitHub"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/etpu_1703"
+                class="social-btn"
+                target="_blank"
+                title="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
             </div>
-            <!-- Grid container -->
-            </footer>
-            <!-- Footer -->
-        </section>
-    </main>
+          </div>
+        </div>
 
-    
-    
-    <!-- Place this before </body> -->
-    <button id="back-to-top-btn" onclick="topFunction()">
-        <i class="fa fa-arrow-up"></i>
-    </button>          
+        <div
+          class="footer-bottom d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3"
+        >
+          <p>© 2026 Esa Tegar Putra Utama. All Rights Reserved.</p>
+          <div class="footer-nav">
+            <a href="#hero">Top</a>
+            <a href="#about">About</a>
+            <a href="#portfolio">Work</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <button id="back-to-top" aria-label="Back to top">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- Font Awesome Icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-    <!-- Custom Script -->
-    <script src="script.js"></script>
-    <!-- AOS JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 
     <script>
-      AOS.init({
-        once: false, // supaya animasi bisa aktif terus setiap muncul
-      });
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1. Inisialisasi AOS (Animate On Scroll)
+        AOS.init({
+          duration: 900,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          once: true,
+          mirror: false,
+        });
 
-      var typed = new Typed('#typed', {
-        strings: ["A Web Developer", "A Graphic Designer", "A Dreamer"],
-        typeSpeed: 70,
-        backSpeed: 50,
-        loop: true
+        // 2. Inisialisasi Efek Teks Mengetik (Typed.js)
+        new Typed("#typed", {
+          strings: [
+            "Software Engineering Graduate",
+            "Front-End Developer Enthusiast",
+            "UI/UX Craftsmanship",
+            "Laravel Ecosystem Builder",
+          ],
+          typeSpeed: 50,
+          backSpeed: 30,
+          backDelay: 2000,
+          loop: true,
+        });
+
+        // 3. Efek Kursor Mewah (Hanya untuk Desktop dengan Mouse)
+        const dot = document.getElementById("cursor-dot");
+        const ring = document.getElementById("cursor-ring");
+
+        if (dot && ring) {
+          document.addEventListener("mousemove", (e) => {
+            dot.style.left = e.clientX + "px";
+            dot.style.top = e.clientY + "px";
+
+            // Memberikan sedikit efek lambat (inertia) pada lingkaran luar kursor
+            ring.animate(
+              {
+                left: e.clientX + "px",
+                top: e.clientY + "px",
+              },
+              { duration: 150, fill: "forwards" },
+            );
+          });
+
+          // Efek Kursor Membesar saat Hover Elemen Interaktif
+          document
+            .querySelectorAll(
+              "a, button, .port-card, .about-tab-btn, .filter-btn",
+            )
+            .forEach((elem) => {
+              elem.addEventListener("mouseenter", () => {
+                ring.style.width = "50px";
+                ring.style.height = "50px";
+                ring.style.borderColor = "var(--gold)";
+                dot.style.transform = "translate(-50%, -50%) scale(1.5)";
+              });
+              elem.addEventListener("mouseleave", () => {
+                ring.style.width = "32px";
+                ring.style.height = "32px";
+                ring.style.borderColor = "rgba(201, 169, 110, 0.4)";
+                dot.style.transform = "translate(-50%, -50%) scale(1)";
+              });
+            });
+        }
+
+        // 4. Transformasi Navbar saat Di-scroll
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 40) {
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
+        });
+
+        // 5. Animasi Scroll-Spy untuk Mengaktifkan Link Navbar Secara Otomatis
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+        window.addEventListener("scroll", () => {
+          let current = "";
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 160) {
+              current = section.getAttribute("id");
+            }
+          });
+
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href").slice(1) === current) {
+              link.classList.add("active");
+            }
+          });
+        });
+
+        // 6. Logika Fungsionalitas Kustom Tabs "About Me" & Skill Bar Fill Animation
+        const tabButtons = document.querySelectorAll(".about-tab-btn");
+        const tabPanes = document.querySelectorAll(".about-tab-pane");
+
+        function animateSkillBars() {
+          const activePane = document.getElementById("tab-skills");
+          if (activePane && activePane.classList.contains("active")) {
+            const fills = activePane.querySelectorAll(".skill-bar-fill");
+            fills.forEach((fill) => {
+              const targetWidth = fill.getAttribute("data-width");
+              fill.style.width = targetWidth;
+            });
+          }
+        }
+
+        tabButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            tabButtons.forEach((b) => b.classList.remove("active"));
+            tabPanes.forEach((p) => p.classList.remove("active"));
+
+            btn.classList.add("active");
+            const targetId = btn.getAttribute("data-tab");
+            const targetPane = document.getElementById(targetId);
+            if (targetPane) {
+              targetPane.classList.add("active");
+              animateSkillBars();
+            }
+          });
+        });
+
+        // 7. Animasi Counter Angka Statistik Otomatis Berbasis Scroll Intersection
+        const statNums = document.querySelectorAll(".stat-num");
+        let statsAnimated = false;
+
+        const animateStats = () => {
+          statNums.forEach((num) => {
+            const target = +num.getAttribute("data-count");
+            let count = 0;
+            const speed = target / 40; // Menentukan kecepatan hitung
+
+            const updateCount = () => {
+              count += speed;
+              if (count < target) {
+                num.innerText = Math.floor(count);
+                setTimeout(updateCount, 25);
+              } else {
+                num.innerText = target + "+";
+              }
+            };
+            updateCount();
+          });
+        };
+
+        const statsSection = document.getElementById("stats");
+        if (statsSection) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              if (entries[0].isIntersecting && !statsAnimated) {
+                animateStats();
+                statsAnimated = true;
+              }
+            },
+            { threshold: 0.4 },
+          );
+          observer.observe(statsSection);
+        }
+
+        // 8. Fungsionalitas Filter Grid Portfolio Projek
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const portCards = document.querySelectorAll(".port-card");
+
+        filterButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            filterButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            const filterValue = btn.getAttribute("data-filter");
+
+            portCards.forEach((card) => {
+              if (
+                filterValue === "all" ||
+                card.getAttribute("data-category") === filterValue
+              ) {
+                card.classList.remove("hide");
+                // Memicu trigger AOS ulang agar efek muncul kembali
+                card.style.opacity = "0";
+                setTimeout(() => {
+                  card.style.opacity = "1";
+                }, 50);
+              } else {
+                card.classList.add("hide");
+              }
+            });
+          });
+        });
+
+        // 9. Back To Top Button Smooth Visibility Toggle
+        const bttBtn = document.getElementById("back-to-top");
+        if (bttBtn) {
+          window.addEventListener("scroll", () => {
+            if (window.scrollY > 400) {
+              bttBtn.classList.add("visible");
+            } else {
+              bttBtn.classList.remove("visible");
+            }
+          });
+
+          bttBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+        }
       });
     </script>
-
-</body>
+  </body>
 </html>
